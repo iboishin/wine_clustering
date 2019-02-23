@@ -8,7 +8,10 @@ from sklearn.metrics import accuracy_score
 from sklearn.decomposition import PCA
 import numpy as np
 
-wines = pd.read_csv('C:/Users/moetoKompiutarche/Downloads/Clustering/Clustering_Wine.csv', header = 0)
+# Table with predicted targets exported on line 135 and also needs a path update
+wines = pd.read_csv('C:/Users/moetoKompiutarche/Documents/IESEG/Clustering/Clustering_Wine.csv', header = 0)
+
+# Need to input plotly credentials on line 145 to have the interactive plotly graph launch
 
 wines.head()
 list(wines)
@@ -16,14 +19,16 @@ list(wines)
 # Remove consumer_segment for unsupervised clustering
 wines_org = wines.drop(columns=['Customer_Segment'])
 
-# Normalize variables to ensure similar scales
+# Normalize variables to ensure similar scales for distance measurements
 wines_scaled = preprocessing.scale(wines_org)
 wines_scaled = pd.DataFrame(wines_scaled, columns = wines_org.columns)
 wines_scaled.head()
 
 # Create pairplot to see distribution
 # Variables more or less normaly distributed
-# Total_Phenols and Flavanoids seem to be correlated
+# Total_Phenols and Flavanoids seem to be strongly correlated
+# Other weaker correlations also present
+# There's one consistent outlier over several variables
 sns.pairplot(wines_scaled)
 plt.show()
 
@@ -55,7 +60,6 @@ wines_pca_2d = pd.DataFrame(wines_pca.transform(wines_scaled))
 ############ AgglomerativeClustering clustering (hierarchical) with wines_scaled
 cluster = AgglomerativeClustering(n_clusters=3, affinity='euclidean', linkage='ward')  
 wines_pca_2d['Target_H'] = cluster.fit_predict(wines_scaled)
-
 
 ############ K means (non-hierarchical) clustering with wines_scaled
 # specifying random state for consistent cluster groupings
@@ -130,7 +134,7 @@ for i in list(wines_org):
     f_oneway(wines_org[i][wines_org.Target_NH == 1], wines_org[i][wines_org.Target_NH == 2], wines_org[i][wines_org.Target_NH == 3]).pvalue
 
 ############ Export new wines_org dataframe to use in Dash for presentation
-wines_org.to_csv('C:/Users/moetoKompiutarche/Downloads/Clustering/wines_org.csv', index=False)
+wines_org.to_csv('C:/Users/moetoKompiutarche/Documents/IESEG/Clustering/wines_org.csv', index=False)
 
 
 ############ Visualize the three groups on the three factors
@@ -138,7 +142,7 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import numpy as np
 
-py.sign_in(username='iboishin', api_key='Z8w63YzRc6TuGpZ1rGPJ')
+py.sign_in(username='', api_key='')
 
 wines_factors = PCA(n_components=3).fit(wines_scaled)
 wines_factors = pd.DataFrame(wines_factors.transform(wines_scaled))
