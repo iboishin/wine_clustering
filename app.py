@@ -8,8 +8,6 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-server = app.server
-
 df = pd.read_csv('C:/Users/moetoKompiutarche/Downloads/Clustering/wines_org.csv')
 
 app.layout = html.Div(children=[
@@ -291,9 +289,11 @@ app.layout = html.Div(children=[
     '''),
 
     dcc.Markdown('''
-    Note: The metrics in the study were not explained in the Kaggle (https://www.kaggle.com/xvivancos/clustering-wines-with-k-means/data) documentation. All of the metrics descriptions
-    above have instead been estimated from online research and may not be 100% accurate. Also, the markdown aspect of Dash by Plot.ly is current not working. As a result, links and bulleted
-    lists can unfortunately not be made at this time.
+
+    Note: The metrics in the study were not explained in the Kaggle (https://www.kaggle.com/xvivancos/clustering-wines-with-k-means/data) documentation.
+    All of the metrics descriptions above have instead been estimated from online research and may not be 100% accurate. Also, the markdown aspect of Dash
+    by Plot.ly is current not working. As a result, links and bulleted lists can unfortunately not be made at this time.
+    
     ''')
     
 ])
